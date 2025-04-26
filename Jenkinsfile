@@ -12,17 +12,17 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t $IMAGE_NAME .'
+                bat 'docker build -t $IMAGE_NAME .'
             }
         }
         stage('Login to Docker Hub') {
             steps {
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
         stage('Push Docker Image to Docker Hub') {
             steps {
-                sh 'docker push $IMAGE_NAME'
+                bat 'docker push $IMAGE_NAME'
             }
         }
     }
