@@ -5,9 +5,9 @@ pipeline {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds') // Jenkins credentials ID
     }
     stages {
-        stage('Pull code from GitHub') {
+        stage('Checkout Code') {
             steps {
-                git 'https://github.com/atulb01/DockerJenkinsResp.git'
+                git branch: 'main', url: 'https://github.com/atulb01/DockerJenkinsResp.git'
             }
         }
         stage('Build Docker Image') {
