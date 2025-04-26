@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t $IMAGE_NAME .'
+                bat 'docker build -t %IMAGE_NAME% .'
             }
         }
         stage('Login to Docker Hub') {
@@ -22,7 +22,7 @@ pipeline {
         }
         stage('Push Docker Image to Docker Hub') {
             steps {
-                bat 'docker push $IMAGE_NAME'
+                bat 'docker push %IMAGE_NAME%'
             }
         }
     }
