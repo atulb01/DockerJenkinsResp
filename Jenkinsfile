@@ -1,32 +1,28 @@
 pipeline {
     agent any
-
     environment {
-        DOCKER_IMAGE = 'atulb0110/docker'
+        IMAGE_NAME = "atul0110/docker"
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds') // Jenkins credentials ID
     }
-
     stages {
         stage('Checkout Code') {
             steps {
                 git branch: 'main', url: 'https://github.com/atulb01/DockerJenkinsResp.git'
             }
         }
-
         stage('Build Docker Image') {
             steps {
-                script {
-                    dockerImage = docker.build("${DOCKER_IMAGE}")
-                }
+                bat 'docker build -t %IMAGE_NAME% .'
             }
         }
-
-        stage('Push to Docker Hub') {
+        stage('Login to Docker Hub') {
             steps {
-                script {
-                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-creds') {
-                        dockerImage.push('latest')
-                    }
-                }
+                bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
+        stage('Push Docker Image to Docker Hub') {
+            steps {
+                bat 'docker push %IMAGE_NAME%'
             }
         }
     }
