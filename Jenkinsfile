@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        IMAGE_NAME = "atul0110/flask-app"
+        IMAGE_NAME = "atul0110/docker"
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds') // Jenkins credentials ID
     }
     stages {
